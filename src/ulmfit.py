@@ -13,6 +13,7 @@ class ULMFiT():
                  lr_lm=1e-3, 
                  load_latest_checkpoint=False, 
                  model_name=None, 
+                 train_lang_model = False,
                  df_lm = None):
         
         self.finetune_model = finetune
@@ -21,6 +22,7 @@ class ULMFiT():
         self.n_epocs_lm = n_epocs_lm
         self.lr_cls = lr_cls
         self.lr_lm = lr_lm
+        self.train_lang_model = train_lang_model
         self.load_latest_checkpoint=load_latest_checkpoint
         self.model_name = model_name
         self.lang = lang
@@ -43,10 +45,10 @@ class ULMFiT():
                                         text_cols= "text", 
                                         label_cols= "label",
                                         vocab = self.data_lm.vocab)
-        if self.df_lm:
+        if self.train_lang_model:
             self.data_cls_lm = TextLMDataBunch.from_df(self.path/"ulmfit_training_data",
                                             train_df=self.df_lm,
-                                            test_df= self.df_test,
+                                            test_df= self.df_valid,
                                             valid_df= self.df_valid,
                                             tokenizer = self.tokenizer, 
                                             text_cols= "text", 
