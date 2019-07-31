@@ -34,9 +34,11 @@ class ULMFiT():
     def load(self, df_train, df_test, df_lm):
         self.df_test = df_test
         self.df_lm = df_lm
-        self.df_train = df_train[:-int(0.2*len(df_train))]
-        self.df_valid = df_train[-int(0.2*len(df_train)):]
-        
+        self.df_train = df_train[:-int(0.1*len(df_train))]
+        print(f"valid : {-int(0.1*len(df_train))}")
+        self.df_valid = df_train[-int(0.1*len(df_train)):]
+        print(f"length of test : {len(self.df_test)}")
+        print(f"Vocab Size : {data_lm.vocab}"
         self.data_cls = TextClasDataBunch.from_df(self.path/"ulmfit_training_data",
                                         train_df=self.df_train,
                                         test_df= self.df_test,
